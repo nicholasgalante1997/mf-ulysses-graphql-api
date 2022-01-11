@@ -1,0 +1,118 @@
+{
+    "advantages": [
+        {
+            "id": "001",
+            "claimId": "0001",
+            "userId": "0002",
+            "timestamp": "00000000000",
+            "content": "brilliant idea, here's why ... ",
+            "validityInSupport": 1009
+        }
+    ],
+    "claims": [
+        {
+            "id": "0001",
+            "userId": "0001",
+            "title": "Change all 3s to the zodiac logo",
+            "shortDesc": "lorem ipsum",
+            "content": "lorem ipsum",
+            "timestamp": "00000000000"
+        },
+        {
+            "id": "0002",
+            "userId": "0001",
+            "title": "Change all 3s to the a pistol svg",
+            "shortDesc": "lorem ipsum",
+            "content": "lorem ipsum",
+            "timestamp": "00000000000"
+        },
+        {
+            "id": "0003",
+            "userId": "0002",
+            "title": "Change all 3s on keyboards to a photo of betty white",
+            "shortDesc": "lorem ipsum",
+            "content": "lorem ipsum",
+            "timestamp": "00000000000"
+        }
+    ],
+    "claim-tags": [
+        {
+            "id": "0001",
+            "claimId": "0001",
+            "tagId": "001"
+        },
+        {
+            "id": "0002",
+            "claimId": "0001",
+            "tagId": "003"
+        },
+        {
+            "id": "0003",
+            "claimId": "0002",
+            "tagId": "001"
+        },
+        {
+            "id": "0004",
+            "claimId": "0003",
+            "tagId": "002"
+        }
+    ],
+    "contrasts": [
+        {
+            "id": "001",
+            "claimId": "0002",
+            "userId": "0001",
+            "timestamp": "00000000000"
+        }
+    ],
+    "detriments": [
+        {
+            "id": "001",
+            "claimId": "0002",
+            "userId": "0001",
+            "timestamp": "00000000000",
+            "content": "Her's why that may not work ... ",
+            "validityInSupport": 32
+        }
+    ],
+    "supports": [
+        {
+            "id": "001",
+            "claimId": "0001",
+            "userId": "0002",
+            "timestamp": "00000000000"
+        }
+    ],
+    "tags": [
+        {
+            "id": "001",
+            "tag": "comedy"
+        },
+        {
+            "id": "002",
+            "tag": "technology"
+        },
+        {
+            "id": "003",
+            "tag": "astrophysics"
+        }
+    ],
+    "users": [
+        {
+            "id": "0001",
+            "username": "BigShrimpin209",
+            "hashedPassword": "fuertyc0n848",
+            "avatar": "https://picsum.photos/200",
+            "description": "Man of the sea",
+            "email": "whosneptune11@cmail.com"
+        },
+        {
+            "id": "0002",
+            "username": "CowOfCrisis212",
+            "hashedPassword": "fuertyc0n84dsvsd8",
+            "avatar": "https://picsum.photos/200",
+            "description": "@Mcdonalds, what are you gonna do??",
+            "email": "badburger11@moomail.com"
+        }
+    ]
+}

@@ -71,6 +71,8 @@ const ClaimType = new GraphQLObjectType({
     name: 'Claim',
     fields: () => ({
         id: { type: GraphQLString },
+        title: { type: GraphQLString },
+        shortDesc: { type: GraphQLString },
         content: { type: GraphQLString },
         timestamp: { type: GraphQLString },
         user: { type: UserType },
