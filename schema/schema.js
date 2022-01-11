@@ -1,6 +1,11 @@
 const graphql = require('graphql');
 const { getUser } = require('../services/user');
-const { getClaimByUser, getClaim } = require('../services/claim');
+const { getClaimByUser, getClaim, getClaims } = require('../services/claim');
+const { getAdvantagesByClaim, getAdvantagesByUser } = require('../services/advantage');
+const { getSupportByUser, getSupportByClaim } = require('../services/support');
+const { getContrastByClaim, getContrastByUser } = require('../services/contrast');
+const { getDetrimentsByClaim, getDetrimentsByUser } = require('../services/detriment');
+const { getClaimTagsByClaim } = require('../services/claim-tags');
 
 const { 
     GraphQLObjectType, 
@@ -81,28 +86,38 @@ const ClaimType = new GraphQLObjectType({
         supports: { 
             type: new GraphQLList(SupportType),
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = parentValue;
+                return getSupportByClaim(id);
             }
         },
         contrasts: { 
             type: new GraphQLList(ContrastType),
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = parentValue;
+                return getContrastByClaim(id);
             }
         },
         advantages: { 
             type: new GraphQLList(AdvantageType),
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = parentValue;
+                return getAdvantagesByClaim(id);
             }
         },
         detriments: { 
             type: new GraphQLList(DetrimentType),
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = parentValue;
+                return getDetrimentsByClaim(id);
             },
         },
-        tags: { type: new GraphQLList(ClaimTagType) }
+        tags: { 
+            type: new GraphQLList(ClaimTagType),
+            resolve(parentValue, args){
+                const { id } = parentValue;
+                return getClaimTagsByClaim(id);
+            }
+        }
     })
 });
 
@@ -125,25 +140,29 @@ const UserType = new GraphQLObjectType({
         supports: { 
             type: new GraphQLList(SupportType),
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = parentValue;
+                return getSupportByUser(id);
             }
         },
         contrasts: { 
             type: new GraphQLList(ContrastType),
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = parentValue;
+                return getContrastByUser(id);
             }
         },
         advantages: { 
             type: new GraphQLList(AdvantageType),
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = parentValue;
+                return getAdvantagesByUser(id);
             }
         },
         detriments: { 
             type: new GraphQLList(DetrimentType),
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = parentValue;
+                return getDetrimentsByUser(id);
             },
         },
     })
@@ -168,11 +187,11 @@ const RootQuery = new GraphQLObjectType({
                 return getClaim(id);
             }
         },
-        advantage: {
-            type: AdvantageType,
-            args: { id: { type: GraphQLString }},
-            resolve(parentValue, args){
-                /** TODO */
+        allClaims: {
+            type: GraphQLList(ClaimType),
+            args: {},
+            resolve(parentValue, args) {
+                return getClaims();
             }
         }
     }
