@@ -1,4 +1,6 @@
 const graphql = require('graphql');
+const { getUser } = require('../services/user');
+const { getClaimByUser, getClaim } = require('../services/claim');
 
 const { 
     GraphQLObjectType, 
@@ -116,7 +118,8 @@ const UserType = new GraphQLObjectType({
         claims: { 
             type: new GraphQLList(ClaimType),
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = parentValue;
+                return getClaimByUser(id);
             }
         },
         supports: { 
@@ -153,14 +156,16 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { id: { type: GraphQLString }},
             resolve(parentValue, args) {
-                /** TODO */
+                const { id } = args;
+                return getUser(id);
             }
         },
         claim: {
             type: ClaimType,
             args: { id: { type: GraphQLString }},
             resolve(parentValue, args){
-                /** TODO */
+                const { id } = args;
+                return getClaim(id);
             }
         },
         advantage: {
