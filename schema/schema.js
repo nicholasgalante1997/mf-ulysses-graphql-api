@@ -6,6 +6,7 @@ const { getSupportByUser, getSupportByClaim } = require('../services/support');
 const { getContrastByClaim, getContrastByUser } = require('../services/contrast');
 const { getDetrimentsByClaim, getDetrimentsByUser } = require('../services/detriment');
 const { getClaimTagsByClaim } = require('../services/claim-tags');
+const { getAllTags, getTag } = require('../services/tags');
 
 const { 
     GraphQLObjectType, 
@@ -14,11 +15,10 @@ const {
     GraphQLList, 
     GraphQLInt,
     GraphQLEnumType,
-    GraphQLID
 } = graphql;
 
-const ClaimTagType = new GraphQLEnumType({
-    name: 'ClaimTag',
+const ClaimTagEnum = new GraphQLEnumType({
+    name: 'ClaimTagEnum',
     values: {
         ENVIRONMENTAL: { value: 'environmental' },
         SOCIALWELFARE: { value: 'social welfare' },
@@ -30,12 +30,54 @@ const ClaimTagType = new GraphQLEnumType({
     }
 })
 
+const ClaimTagType = new GraphQLObjectType({
+    name: 'ClaimTag',
+    fields: () => ({
+        id: { type: GraphQLString },
+        tag: { type: ClaimTagEnum }
+    })
+})
+
+const ClaimTagAssociationsType = new GraphQLObjectType({
+    name: "ClaimTagAssociation",
+    fields: () => ({
+        id: { type: GraphQLString },
+        timestamp: { type: GraphQLString },
+        claim: { 
+            type: ClaimType,
+            resolve(parentValue, args){
+                const { claimId } = parentValue;
+                return getClaim(claimId);
+            }
+        },
+        tag: { 
+            type: ClaimTagType,
+            resolve(parentValue, args) {
+                const { tagId } = parentValue;
+                return getTag(tagId);
+            }
+        }
+    })
+})
+
 const SupportType = new GraphQLObjectType({
     name: 'Support',
     fields: () => ({
         id: { type: GraphQLString },
-        user: { type: UserType },
-        claim: { type: ClaimType },
+        user: { 
+            type: UserType,
+            resolve(parentValue, args){
+                const { userId } = parentValue;
+                return getUser(userId);
+            }
+        },
+        claim: { 
+            type: ClaimType,
+            resolve(parentValue, args){
+                const { claimId } = parentValue;
+                return getClaim(claimId);
+            }
+        },
         timestamp: { type: GraphQLString }
     })
 });
@@ -44,8 +86,20 @@ const ContrastType = new GraphQLObjectType({
     name: 'Contrast',
     fields: () => ({
         id: { type: GraphQLString },
-        user: { type: UserType },
-        claim: { type: ClaimType },
+        user: { 
+            type: UserType,
+            resolve(parentValue, args){
+                const { userId } = parentValue;
+                return getUser(userId);
+            }
+        },
+        claim: { 
+            type: ClaimType,
+            resolve(parentValue, args){
+                const { claimId } = parentValue;
+                return getClaim(claimId);
+            }
+        },
         timestamp: { type: GraphQLString }
     })
 });
@@ -54,8 +108,20 @@ const AdvantageType = new GraphQLObjectType({
     name: 'Advantage',
     fields: () => ({
         id: { type: GraphQLString },
-        user: { type: UserType },
-        claim: { type: ClaimType },
+        user: { 
+            type: UserType,
+            resolve(parentValue, args){
+                const { userId } = parentValue;
+                return getUser(userId);
+            }
+        },
+        claim: { 
+            type: ClaimType,
+            resolve(parentValue, args){
+                const { claimId } = parentValue;
+                return getClaim(claimId);
+            }
+        },
         timestamp: { type: GraphQLString },
         content: { type: GraphQLString },
         validityInSupport: { type: GraphQLInt }
@@ -66,8 +132,20 @@ const DetrimentType = new GraphQLObjectType({
     name: 'Detriment',
     fields: () => ({
         id: { type: GraphQLString },
-        user: { type: UserType },
-        claim: { type: ClaimType },
+        user: { 
+            type: UserType,
+            resolve(parentValue, args){
+                const { userId } = parentValue;
+                return getUser(userId);
+            }
+        },
+        claim: { 
+            type: ClaimType,
+            resolve(parentValue, args){
+                const { claimId } = parentValue;
+                return getClaim(claimId);
+            }
+        },
         timestamp: { type: GraphQLString },
         content: { type: GraphQLString },
         validityInSupport: { type: GraphQLInt }
@@ -82,7 +160,13 @@ const ClaimType = new GraphQLObjectType({
         shortDesc: { type: GraphQLString },
         content: { type: GraphQLString },
         timestamp: { type: GraphQLString },
-        user: { type: UserType },
+        user: { 
+            type: UserType,
+            resolve(parentValue, args) {
+                const { userId } = parentValue;
+                return getUser(userId);
+            }
+        },
         supports: { 
             type: new GraphQLList(SupportType),
             resolve(parentValue, args){
@@ -112,7 +196,7 @@ const ClaimType = new GraphQLObjectType({
             },
         },
         tags: { 
-            type: new GraphQLList(ClaimTagType),
+            type: new GraphQLList(ClaimTagAssociationsType),
             resolve(parentValue, args){
                 const { id } = parentValue;
                 return getClaimTagsByClaim(id);
@@ -192,6 +276,13 @@ const RootQuery = new GraphQLObjectType({
             args: {},
             resolve(parentValue, args) {
                 return getClaims();
+            }
+        },
+        tags: {
+            type: GraphQLList(ClaimTagType),
+            args: {},
+            resolve(parentValue, args) {
+                return getAllTags();
             }
         }
     }
