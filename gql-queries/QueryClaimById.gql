@@ -1,0 +1,32 @@
+query {
+  claim(id: "0001") {
+    id
+    title
+    shortDesc
+    content
+    user {
+      username
+      avatar
+    }
+    advantages {
+      content
+      user {
+        username,
+        avatar
+      }
+    }
+    supports {
+      id
+    }
+   detriments {
+      content
+      user {
+        username,
+        avatar
+      }
+    }
+    contrasts {
+      id
+    }
+  }
+}

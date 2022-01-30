@@ -10,5 +10,5 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 app.listen(5001, () => {
-    console.log('api booting up')
+    console.log('graphql-api booted up. 🚀')
 })

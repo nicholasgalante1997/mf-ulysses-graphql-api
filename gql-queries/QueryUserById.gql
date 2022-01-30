@@ -1,0 +1,29 @@
+query {
+  user(id: "0001") {
+    claims {
+      id
+      title
+      content
+      supports {
+        id
+      }
+      advantages {
+        user {
+          username
+          avatar
+        }
+      	content
+      }
+      contrasts {
+        id
+      }
+      detriments {
+         user {
+          username
+          avatar
+        }
+      	content
+      }
+    }
+  }
+}

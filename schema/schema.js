@@ -26,7 +26,8 @@ const ClaimTagEnum = new GraphQLEnumType({
         TECHNOLOGY: { value: 'technology' },
         GOVERNANCE: { value: 'governance' },
         ECONOMY: { value: 'economy' },
-        ASTROPHYSICS: { value: 'astrophysics' }
+        ASTROPHYSICS: { value: 'astrophysics' },
+        COMEDY: { value: 'comedy' }
     }
 })
 

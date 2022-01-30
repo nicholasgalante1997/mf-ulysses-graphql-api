@@ -1,0 +1,31 @@
+query {
+  allClaims {
+    id
+    title
+    shortDesc
+    user {
+      avatar
+      username
+    }
+    supports {
+      id
+    }
+    contrasts {
+      id
+    }
+    advantages {
+      user {
+        username
+        avatar
+      }
+      content
+    }
+    detriments {
+      user {
+        username
+        avatar
+      }
+      content
+    }
+  }
+}
